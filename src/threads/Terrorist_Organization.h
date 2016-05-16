@@ -11,9 +11,9 @@
 
 class Terrorist_Organization {
 public:
-    static void wage_war_with_infidels(Armory& armory, bool &time_to_exit_program){
-        while (!time_to_exit_program) {
-            (take_weapons_from_armory(armory) ? perform_attack_in_europe : wait_for_weapons)();
+    static void wage_war_with_infidels(SimulationState &simulationState){
+        while (!simulationState.time_to_exit_program) {
+            (take_weapons_from_armory(simulationState.armory) ? perform_attack_in_europe : wait_for_weapons)();
         }
     }
 

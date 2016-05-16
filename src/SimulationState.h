@@ -11,6 +11,7 @@
 
 class SimulationState {
 public:
+    bool time_to_exit_program = false;
     Treasury treasury;
     Armory armory;
 

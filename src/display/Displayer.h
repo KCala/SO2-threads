@@ -14,21 +14,21 @@
 
 class Displayer {
 public:
-    void displaySimulationStateUntilKeypress(const Treasury &treasury, const Armory &armory) {
+    void displaySimulationStateUntilKeypress(const SimulationState& simulationState) {
         initialize();
-        startDisplayLoop(treasury, armory);
+        startDisplayLoop(simulationState);
         shutdown();
     }
 
 private:
 
-    void startDisplayLoop(const Treasury &treasury, const Armory &armory) {
+    void startDisplayLoop(const SimulationState& simulationState) {
         while (true) {
             if(kbhit()) {
                 break;
             }
-            printw("Treasury: %i\n", treasury.getDollars_number());
-            printw("Armory: %i\n", armory.getWeapons_number());
+            printw("Treasury: %i\n", simulationState.treasury.getDollars_number());
+            printw("Armory: %i\n", simulationState.armory.getWeapons_number());
             std::this_thread::sleep_for(std::chrono::milliseconds(800));
         }
     }

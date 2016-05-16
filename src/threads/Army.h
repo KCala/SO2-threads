@@ -13,19 +13,19 @@
 
 class Army {
 public:
-    static void wage_war_with_neighbours(Treasury &treasury, Armory &armory, bool &time_to_exit_program){
+    static void wage_war_with_neighbours(SimulationState &simulationState){
         bool moneyTaken = false;
         bool weaponsTaken = false;
 
-        while (!time_to_exit_program) {
+        while (!simulationState.time_to_exit_program) {
             if(moneyTaken && weaponsTaken){
                 attack_neighbours();
                 moneyTaken = false;
                 weaponsTaken = false;
             } else {
                 wait_for_resources();
-                moneyTaken = moneyTaken ? moneyTaken : take_money_from_treasury(treasury);
-                weaponsTaken = weaponsTaken ? weaponsTaken : take_weapons_from_armory(armory);
+                moneyTaken = moneyTaken ? moneyTaken : take_money_from_treasury(simulationState.treasury);
+                weaponsTaken = weaponsTaken ? weaponsTaken : take_weapons_from_armory(simulationState.armory);
             }
         }
     }

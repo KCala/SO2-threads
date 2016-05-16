@@ -12,10 +12,10 @@
 
 class Weapons_Factory {
 public:
-    static void produce_weapons(Treasury &treasury, Armory &arsenal, bool &time_to_exit_program) {
-        while (!time_to_exit_program) {
-            if (take_money_from_treasury(treasury)) {
-                deposit_weapon_to_arsenal(arsenal);
+    static void produce_weapons(SimulationState &simulationState) {
+        while (!simulationState.time_to_exit_program) {
+            if (take_money_from_treasury(simulationState.treasury)) {
+                deposit_weapon_to_arsenal(simulationState.armory);
                 manufacture_weapons();
             } else {
                 wait_for_money();
