@@ -33,7 +33,7 @@ bool Army::take_money_from_treasury(Treasury &treasury) {
         return false;
     }
     treasury.takeDolars(consts::WEAPONS_PRICE);
-    std::cout << "ARMY TAKES MONEY FROM TREASURY!\n";
+//    std::cout << "ARMY TAKES MONEY FROM TREASURY!\n";
     return true;
 }
 
@@ -44,12 +44,12 @@ bool Army::take_weapons_from_armory(Armory &armory) {
         return false;
     }
     armory.takeWeapons(consts::ARMY_WEAPONS_NUMBER_FOR_SINGLE_ATTACK);
-    std::cout << "ARMY TAKES WEAPONS!\n";
+//    std::cout << "ARMY TAKES WEAPONS!\n";
     return true;
 }
 
 bool Army::attack_neighbours() {
-    std::cout << "ARMY ATTACKS NEIGHBOURS!\n";
+//    std::cout << "ARMY ATTACKS NEIGHBOURS!\n";
     std::this_thread::sleep_for(consts::ARMY_ATTACK_TIME);
 }
 

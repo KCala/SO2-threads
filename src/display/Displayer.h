@@ -8,37 +8,44 @@
 
 #include <ncurses.h>
 #include <thread>
+#include <iostream>
 #include "../resources/Treasury.h"
 #include "../resources/Armory.h"
 
 class Displayer {
 public:
-    void initialize() {
-        initscr();
-        raw();
+    void displaySimulationStateUntilKeypress(const Treasury &treasury, const Armory &armory) {
+        initialize();
+        startDisplayLoop(treasury, armory);
+        shutdown();
     }
 
-    void displayStateAsText(const Treasury &treasury, const Armory &armory) {
-        cbreak();
-        noecho();
-        nodelay(stdscr, TRUE);
-        scrollok(stdscr, TRUE);
+private:
 
+    void startDisplayLoop(const Treasury &treasury, const Armory &armory) {
         while (true) {
             if(kbhit()) {
                 break;
             }
-            printf("Treasury: %i\n", treasury.getDollars_number());
-            printf("Armory: %i\n", armory.getWeapons_number());
+            printw("Treasury: %i\n", treasury.getDollars_number());
+            printw("Armory: %i\n", armory.getWeapons_number());
             std::this_thread::sleep_for(std::chrono::milliseconds(800));
         }
     }
 
-    void shutdown() {
-        endwin();
+    void initialize() {
+        initscr();
+        raw();
+        noecho();
+        keypad(stdscr, TRUE);
+        nodelay(stdscr, TRUE);
+        scrollok(stdscr, TRUE);
     }
 
-private:
+    void shutdown() {
+        endwin();
+        std::cout<<"Shutting down threads..." << std::endl;
+    }
 
     int kbhit(void) {
         int ch = getch();

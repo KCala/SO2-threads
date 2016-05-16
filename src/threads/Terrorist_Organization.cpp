@@ -21,12 +21,12 @@ bool Terrorist_Organization::take_weapons_from_armory(Armory &armory) {
         return false;
     }
     armory.takeWeapons(consts::TERRORISTS_WEAPONS_NUMBER_STOLEN);
-    std::cout << "TERRORISTS STEAL WEAPONS!\n";
+//    std::cout << "TERRORISTS STEAL WEAPONS!\n";
     return true;
 }
 
 void Terrorist_Organization::perform_attack_in_europe() {
-    std::cout << "TERRORISTS ATTACK IN EUROPE!\n";
+//    std::cout << "TERRORISTS ATTACK IN EUROPE!\n";
     std::this_thread::sleep_for(consts::TERRORISTS_ATTACK_TIME);
 }
 

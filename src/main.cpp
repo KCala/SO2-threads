@@ -23,8 +23,7 @@ int main() {
     std::thread terrorists_thread(Terrorist_Organization::wage_war_with_infidels, std::ref(armory), std::ref(time_to_exit_program));
 
     Displayer displayer;
-    displayer.initialize();
-    displayer.displayStateAsText(treasury, armory);
+    displayer.displaySimulationStateUntilKeypress(treasury, armory);
 
     time_to_exit_program = true;
     oil_field_thread.join();
