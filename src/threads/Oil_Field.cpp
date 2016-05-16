@@ -8,8 +8,8 @@
 #include "../util/consts.h"
 
 
-void Oil_Field::put_petrodollars_in_treasury(Treasury &treasury) {
-    while(true){
+void Oil_Field::put_petrodollars_in_treasury(Treasury &treasury, bool& time_to_exit_program) {
+    while(!time_to_exit_program){
         drill_oil();
         std::unique_lock<std::timed_mutex> treasuryLock(treasury.dollars_mutex, std::defer_lock);
         treasuryLock.lock();

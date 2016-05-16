@@ -10,7 +10,7 @@
 
 class Terrorist_Organization {
 public:
-    static void wage_war_with_infidels(Armory& armory);
+    static void wage_war_with_infidels(Armory& armory, bool &time_to_exit_program);
 
 private:
     static bool take_weapons_from_armory(Armory& armory);

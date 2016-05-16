@@ -12,7 +12,7 @@
 class Oil_Field {
 
 public:
-    static void put_petrodollars_in_treasury(Treasury &treasury);
+    static void put_petrodollars_in_treasury(Treasury &treasury, bool& time_to_exit_program);
 
     static void drill_oil();
 };

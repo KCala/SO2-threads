@@ -8,19 +8,16 @@
 #include "../util/consts.h"
 
 
-void Terrorist_Organization::wage_war_with_infidels(Armory &armory) {
-    while(true){
-        while(!take_weapons_from_armory(armory)){
-            wait_for_weapons();
-        }
-        perform_attack_in_europe();
+void Terrorist_Organization::wage_war_with_infidels(Armory &armory, bool &time_to_exit_program) {
+    while (!time_to_exit_program) {
+        (take_weapons_from_armory(armory) ? perform_attack_in_europe : wait_for_weapons)();
     }
 }
 
 bool Terrorist_Organization::take_weapons_from_armory(Armory &armory) {
     std::unique_lock<std::timed_mutex> armoryLock(armory.weapons_mutex, std::defer_lock);
     armoryLock.lock();
-    if(armory.getWeapons_number() < consts::TERRORISTS_WEAPONS_NUMBER_STOLEN){
+    if (armory.getWeapons_number() < consts::TERRORISTS_WEAPONS_NUMBER_STOLEN) {
         return false;
     }
     armory.takeWeapons(consts::TERRORISTS_WEAPONS_NUMBER_STOLEN);

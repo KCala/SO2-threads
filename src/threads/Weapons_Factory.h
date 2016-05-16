@@ -11,11 +11,12 @@
 
 class Weapons_Factory {
 public:
-    static void produce_weapons(Treasury& treasury, Armory& arsenal);
+    static void produce_weapons(Treasury &treasury, Armory &arsenal, bool &time_to_exit_program);
 private:
     static bool take_money_from_treasury(Treasury& treasury);
     static void manufacture_weapons();
     static void deposit_weapon_to_arsenal(Armory& arsenal);
+
     static void wait_for_money();
 };
 

@@ -11,7 +11,7 @@
 
 class Army {
 public:
-    static void wage_war_with_neighbours(Treasury &treasury, Armory &armory);
+    static void wage_war_with_neighbours(Treasury &treasury, Armory &armory, bool &time_to_exit_program);
 private:
     static bool take_money_from_treasury(Treasury& treasury);
     static bool take_weapons_from_armory(Armory& armory);

@@ -7,13 +7,14 @@
 #include "Weapons_Factory.h"
 #include "../util/consts.h"
 
-void Weapons_Factory::produce_weapons(Treasury &treasury, Armory &arsenal) {
-    while (true) {
-        while (!take_money_from_treasury(treasury)) {
+void Weapons_Factory::produce_weapons(Treasury &treasury, Armory &arsenal, bool &time_to_exit_program) {
+    while (!time_to_exit_program) {
+        if (take_money_from_treasury(treasury)) {
+            deposit_weapon_to_arsenal(arsenal);
+            manufacture_weapons();
+        } else {
             wait_for_money();
         }
-        deposit_weapon_to_arsenal(arsenal);
-        manufacture_weapons();
     }
 }
 
