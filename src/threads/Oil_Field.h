@@ -8,13 +8,22 @@
 
 #include <iostream>
 #include "../resources/Treasury.h"
+#include "../util/consts.h"
+#include "../util/utils.h"
 
 class Oil_Field {
 
 public:
-    static void put_petrodollars_in_treasury(Treasury &treasury, bool& time_to_exit_program);
+    static void put_petrodollars_in_treasury(Treasury &treasury, bool& time_to_exit_program){
+        while(!time_to_exit_program){
+            drill_oil();
+            std::unique_lock<std::timed_mutex> treasuryLock(treasury.dollars_mutex, std::defer_lock);
+            treasuryLock.lock();
+            treasury.depositDollars(utils::generateRandomIntInRange(consts::OIL_FIELD_MIN_INCOME, consts::OIL_FIELD_MAX_INCOME));
+        }
+    }
 
-    static void drill_oil();
+    static void drill_oil(){std::this_thread::sleep_for(consts::OIL_FIELD_DRILL_TIME);}
 };
 
 
