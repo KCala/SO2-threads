@@ -7,15 +7,15 @@
 
 namespace consts{
     //oil field
-    const int OIL_FIELD_MIN_INCOME = 100;
-    const int OIL_FIELD_MAX_INCOME = 500;
+    const int OIL_FIELD_MIN_INCOME = 200;
+    const int OIL_FIELD_MAX_INCOME = 1000;
     const std::chrono::milliseconds OIL_FIELD_DRILL_TIME(2000);
 
     //weapon factory
-    const int WEAPONS_PRICE = 300;
-    const int WEAPONS_TO_DEPOSIT = 1;
+    const int WEAPONS_PRICE = 800;
+    const int WEAPONS_TO_DEPOSIT = 6;
     const std::chrono::milliseconds WEAPONS_ARMORY_NO_MONEY_COOLDOWN(1000);
-    const std::chrono::milliseconds WEAPONS_ARMORY_MANUFACTURING_TIME(2000);
+    const std::chrono::milliseconds WEAPONS_ARMORY_MANUFACTURING_TIME(1000);
 
     //army
     const int ARMY_ATTACK_PRICE = 1000;
@@ -25,7 +25,7 @@ namespace consts{
 
     //terrorists
     const int TERRORISTS_WEAPONS_NUMBER_STOLEN = 5;
-    const std::chrono::milliseconds TERRORISTS_NO_WEAPONS_COOLDOWN(1000);
+    const std::chrono::milliseconds TERRORISTS_NO_WEAPONS_COOLDOWN(3000);
     const std::chrono::milliseconds TERRORISTS_ATTACK_TIME(5000);
 
     //all
