@@ -16,15 +16,26 @@ class Oil_Field {
 
 public:
     static void put_petrodollars_in_treasury(SimulationState &simulationState) {
-        while(!simulationState.time_to_exit_program){
-            drill_oil();
-            std::unique_lock<std::timed_mutex> treasuryLock(simulationState.treasury.dollars_mutex, std::defer_lock);
-            treasuryLock.lock();
-            simulationState.treasury.depositDollars(utils::generateRandomIntInRange(consts::OIL_FIELD_MIN_INCOME, consts::OIL_FIELD_MAX_INCOME));
+        while (!simulationState.time_to_exit_program) {
+            drill_oil(simulationState);
+            depositMoney(simulationState);
         }
     }
 
-    static void drill_oil(){std::this_thread::sleep_for(consts::OIL_FIELD_DRILL_TIME);}
+    static void depositMoney(SimulationState &simulationState) {
+        simulationState.oil_field_state = SimulationState::Oil_Field_State::O_WAITING_FOR_TREASURY;
+        std::unique_lock<std::timed_mutex> treasuryLock(simulationState.treasury.dollars_mutex, std::defer_lock);
+        treasuryLock.lock();
+        simulationState.oil_field_state = SimulationState::Oil_Field_State::O_IN_TREASURY;
+        std::this_thread::sleep_for(consts::TREASURY_TIME);
+        simulationState.treasury.depositDollars(
+                utils::generateRandomIntInRange(consts::OIL_FIELD_MIN_INCOME, consts::OIL_FIELD_MAX_INCOME));
+    }
+
+    static void drill_oil(SimulationState &simulationState) {
+        simulationState.oil_field_state = SimulationState::Oil_Field_State::O_DRILLING;
+        std::this_thread::sleep_for(consts::OIL_FIELD_DRILL_TIME);
+    }
 };
 
 
