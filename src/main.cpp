@@ -10,6 +10,8 @@
 #include "SimulationState.h"
 
 
+void sendSignalToFinishThreads(SimulationState &simulationState) { simulationState.time_to_exit_program = true; }
+
 using namespace std;
 
 int main() {
@@ -20,13 +22,16 @@ int main() {
     std::thread army_thread(Army::wage_war_with_neighbours, std::ref(simulationState));
     std::thread terrorists_thread(Terrorist_Organization::wage_war_with_infidels, std::ref(simulationState));
 
-    Displayer displayer;
-    displayer.displaySimulationStateUntilKeypress(simulationState);
+    Displayer displayer(simulationState);
+    displayer.displaySimulationStateUntilKeypress();
 
-    simulationState.time_to_exit_program = true;
+    sendSignalToFinishThreads(simulationState);
     oil_field_thread.join();
     weapons_factory_thread.join();
     army_thread.join();
     terrorists_thread.join();
 
 }
+
+
+

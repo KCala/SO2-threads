@@ -13,29 +13,55 @@
 #include "../resources/Armory.h"
 
 class Displayer {
+private:
+    SimulationState &simulationState;
+    int min_window_y = 40;
+    int min_window_x = 100;
+
+    int get_current_window_y(){
+        return getmaxy(stdscr);
+    }
+    int get_cuurent_window_x(){
+        return getmaxx(stdscr);
+    }
+
 public:
-    void displaySimulationStateUntilKeypress(const SimulationState& simulationState) {
+    Displayer(SimulationState &simulationState) : simulationState(simulationState) { }
+
+    void displaySimulationStateUntilKeypress() {
         initialize();
-        startDisplayLoop(simulationState);
+        startDisplayLoop();
         shutdown();
     }
 
 private:
-
-    void startDisplayLoop(const SimulationState& simulationState) {
+    void startDisplayLoop() {
         while (true) {
-            if(kbhit()) {
+            if (kbhit()) {
                 break;
             }
-            printw("Treasury: %i\n", simulationState.treasury.getDollars_number());
-            printw("Armory: %i\n", simulationState.armory.getWeapons_number());
-            std::this_thread::sleep_for(std::chrono::milliseconds(800));
+            if (get_current_window_y() < min_window_y || get_cuurent_window_x() < min_window_x) {
+                displayResizePrompt();
+            } else {
+                displayActualSimulationState();
+            }
+            std::this_thread::sleep_for(std::chrono::milliseconds(50));
         }
+    }
+
+    void displayResizePrompt() {
+        clear();
+        mvaddstr(get_current_window_y()/2-1, get_cuurent_window_x()/2-11, "Resize to bigger window...");
+        mvaddstr(get_current_window_y()/2+1, get_cuurent_window_x()/2-7, "ENTER to exit");
+    }
+
+    void displayActualSimulationState() {
+        clear();
     }
 
     void initialize() {
         initscr();
-        raw();
+        cbreak();
         noecho();
         keypad(stdscr, TRUE);
         nodelay(stdscr, TRUE);
@@ -44,17 +70,16 @@ private:
 
     void shutdown() {
         endwin();
-        std::cout<<"Shutting down threads..." << std::endl;
+        std::cout << "Shutting down threads..." << std::endl;
     }
 
-    int kbhit(void) {
+    bool kbhit(void) {
         int ch = getch();
-
-        if (ch != ERR) {
-            ungetch(ch);
-            return 1;
+        if (ch != ERR && ch == '\n') {
+//            ungetch(ch);
+            return true;
         } else {
-            return 0;
+            return false;
         }
     }
 };
